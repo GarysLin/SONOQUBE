@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  sonarscanner:
+    image: sonarsource/sonar-scanner-cli
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    # ports:
+    #   - "59000:9000"
+    networks:
+      - sonarnet
+    environment:
+      SONAR_HOST_URL: http://${SONARQUBE_URL}
+      SONAR_SCANNER_OPTS: -Dsonar.projectKey=${YOUR_PROJECT_KEY}
+      SONAR_LOGIN: myAuthenticationToken
+    volumes:
+      - ./volumes/sonarqube/conf:/usr/src
+     
+networks:
+  sonarnet:
+    external:
+      name: sonarnet
